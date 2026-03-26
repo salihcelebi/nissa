@@ -83,7 +83,7 @@ function ScrollToBottom(props: { className?: string }) {
       onClick={() => scrollToBottom()}
     >
       <ArrowDown className="h-4 w-4" />
-      <span>Scroll to bottom</span>
+      <span>En alta git</span>
     </Button>
   );
 }
@@ -105,7 +105,7 @@ function OpenGitHubRepo() {
           </a>
         </TooltipTrigger>
         <TooltipContent side="left">
-          <p>Open GitHub repo</p>
+          <p>GitHub deposunu aç</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -168,10 +168,10 @@ export function Thread() {
 
       // Message is defined, and it has not been logged yet. Save it, and send the error
       lastError.current = message;
-      toast.error("An error occurred. Please try again.", {
+      toast.error("Bir hata oluştu. Lütfen tekrar deneyin.", {
         description: (
           <p>
-            <strong>Error:</strong> <code>{message}</code>
+            <strong>Hata:</strong> <code>{message}</code>
           </p>
         ),
         richColors: true,
@@ -254,9 +254,9 @@ export function Thread() {
           await creditResult.refundCredits();
         }
 
-        toast.error("Server temporarily overloaded", {
+        toast.error("Sunucu geçici olarak yoğun", {
           description:
-            "The AI server is busy. Please try again in a moment. Your credit has been refunded.",
+            "Yapay zekâ sunucusu şu anda meşgul. Lütfen kısa süre sonra tekrar deneyin. Krediniz iade edildi.",
           duration: 6000,
         });
       } else {
@@ -265,9 +265,9 @@ export function Thread() {
           await creditResult.refundCredits();
         }
 
-        toast.error("Request failed", {
+        toast.error("İstek başarısız oldu", {
           description:
-            "There was an error processing your message. Your credit has been refunded.",
+            "Mesajınız işlenirken bir hata oluştu. Krediniz iade edildi.",
           duration: 5000,
         });
       }
@@ -306,9 +306,9 @@ export function Thread() {
           await creditResult.refundCredits();
         }
 
-        toast.error("Server temporarily overloaded", {
+        toast.error("Sunucu geçici olarak yoğun", {
           description:
-            "The AI server is busy. Please try again in a moment. Your credit has been refunded.",
+            "Yapay zekâ sunucusu şu anda meşgul. Lütfen kısa süre sonra tekrar deneyin. Krediniz iade edildi.",
           duration: 6000,
         });
       } else {
@@ -317,9 +317,9 @@ export function Thread() {
           await creditResult.refundCredits();
         }
 
-        toast.error("Regeneration failed", {
+        toast.error("Yeniden oluşturma başarısız oldu", {
           description:
-            "There was an error regenerating the message. Your credit has been refunded.",
+            "Mesaj yeniden oluşturulurken bir hata oluştu. Krediniz iade edildi.",
           duration: 5000,
         });
       }
@@ -455,7 +455,7 @@ export function Thread() {
                 <TooltipIconButton
                   size="lg"
                   className="p-4"
-                  tooltip="New thread"
+                  tooltip="Yeni sohbet"
                   variant="ghost"
                   onClick={() => setThreadId(null)}
                 >
@@ -557,7 +557,7 @@ export function Thread() {
                             form?.requestSubmit();
                           }
                         }}
-                        placeholder="Type your message..."
+                        placeholder="Mesajınızı yazın..."
                         className="field-sizing-content resize-none border-none bg-transparent p-3.5 pb-0 shadow-none ring-0 outline-none focus:ring-0 focus:outline-none"
                       />
 
@@ -573,7 +573,7 @@ export function Thread() {
                               htmlFor="render-tool-calls"
                               className="text-sm text-gray-600"
                             >
-                              Hide Tool Calls
+                              Araç çağrılarını gizle
                             </Label>
                           </div>
                         </div>
@@ -583,7 +583,7 @@ export function Thread() {
                         >
                           <Plus className="size-5 text-gray-600" />
                           <span className="text-sm text-gray-600">
-                            Upload PDF or Image
+                            PDF veya görsel yükle
                           </span>
                         </Label>
                         <input
@@ -601,7 +601,7 @@ export function Thread() {
                             className="ml-auto"
                           >
                             <LoaderCircle className="h-4 w-4 animate-spin" />
-                            Cancel
+                            İptal
                           </Button>
                         ) : (
                           <Button
@@ -612,7 +612,7 @@ export function Thread() {
                               (!input.trim() && contentBlocks.length === 0)
                             }
                           >
-                            Send
+                            Gönder
                           </Button>
                         )}
                       </div>

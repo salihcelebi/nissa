@@ -59,7 +59,7 @@ export default function SigninInterface() {
     setError(null);
 
     if (!email || !password) {
-      setError("Please enter both email and password");
+      setError("Lütfen e-posta ve şifre alanlarını doldurun");
       return;
     }
 
@@ -85,7 +85,7 @@ export default function SigninInterface() {
       }, 5000);
     } catch (err) {
       console.error("Sign in error:", err);
-      setError("An unexpected error occurred. Please try again.");
+      setError("Beklenmeyen bir hata oluştu. Lütfen tekrar deneyin.");
     } finally {
       setIsLoading(false);
     }
@@ -110,9 +110,9 @@ export default function SigninInterface() {
     <div className="flex min-h-screen items-center justify-center py-10">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-center text-2xl">Sign In</CardTitle>
+          <CardTitle className="text-center text-2xl">Giriş yap</CardTitle>
           <CardDescription className="text-center">
-            Welcome back to the Agent with Auth and Payments Client
+            Agent with Auth and Payments uygulamasına tekrar hoş geldiniz
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -125,14 +125,14 @@ export default function SigninInterface() {
           {isSuccess && (
             <Alert className="mb-4 border-green-200 bg-green-50 text-green-800">
               <AlertDescription className="flex flex-col gap-2">
-                <span>Success! We're redirecting you to the dashboard...</span>
+                <span>Başarılı! Gösterge paneline yönlendiriliyorsunuz...</span>
                 {showManualRedirect && (
                   <Button
                     onClick={() => router.push("/")}
                     variant="outline"
                     className="mt-2 border-green-300 text-green-700 hover:bg-green-100"
                   >
-                    Go to Dashboard Now
+                    Şimdi gösterge paneline git
                   </Button>
                 )}
               </AlertDescription>
@@ -144,7 +144,7 @@ export default function SigninInterface() {
             className="space-y-4"
           >
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">E-posta</Label>
               <Input
                 id="email"
                 type="email"
@@ -157,17 +157,17 @@ export default function SigninInterface() {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">Şifre</Label>
                 <Link
                   href="/forgot-password"
                   className="text-primary text-sm font-medium hover:underline"
                 >
-                  Forgot password?
+                  Şifremi unuttum
                 </Link>
               </div>
               <PasswordInput
                 id="password"
-                placeholder="Enter your password"
+                placeholder="Şifrenizi girin"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -186,10 +186,10 @@ export default function SigninInterface() {
               disabled={isLoading || isSuccess}
             >
               {isLoading
-                ? "Signing in..."
+                ? "Giriş yapılıyor..."
                 : isSuccess
-                  ? "Signed In Successfully"
-                  : "Sign In"}
+                  ? "Giriş başarılı"
+                  : "Giriş yap"}
             </Button>
           </form>
 
@@ -201,7 +201,7 @@ export default function SigninInterface() {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-card text-muted-foreground px-2">
-                    Or continue with
+                    Veya şununla devam et
                   </span>
                 </div>
               </div>
@@ -225,19 +225,19 @@ export default function SigninInterface() {
                 >
                   <path d="M20.283 10.356h-8.327v3.451h4.792c-.446 2.193-2.313 3.453-4.792 3.453a5.27 5.27 0 0 1-5.279-5.28 5.27 5.27 0 0 1 5.279-5.279c1.259 0 2.397.447 3.29 1.178l2.6-2.599c-1.584-1.381-3.615-2.233-5.89-2.233a8.908 8.908 0 0 0-8.934 8.934 8.907 8.907 0 0 0 8.934 8.934c4.467 0 8.529-3.249 8.529-8.934 0-.528-.081-1.097-.202-1.625z"></path>
                 </svg>
-                Sign in with Google
+                Google ile giriş yap
               </Button>
             </>
           )}
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-muted-foreground text-sm">
-            Don&apos;t have an account?{" "}
+            Hesabınız yok mu?{" "}
             <Link
               href="/signup"
               className="text-primary font-medium hover:underline"
             >
-              Sign up
+              Kayıt ol
             </Link>
           </p>
         </CardFooter>

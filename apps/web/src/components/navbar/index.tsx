@@ -36,7 +36,7 @@ export function Navbar() {
                   className={navigationMenuTriggerStyle()}
                   asChild
                 >
-                  <Link href="/">Chat</Link>
+                  <Link href="/">Sohbet</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
@@ -44,7 +44,7 @@ export function Navbar() {
                   className={navigationMenuTriggerStyle()}
                   asChild
                 >
-                  <Link href="/pricing">Pricing</Link>
+                  <Link href="/pricing">Fiyatlandırma</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -63,7 +63,7 @@ export function Navbar() {
                 className="md:hidden"
               >
                 <Menu className="h-5 w-5" />
-                <span className="sr-only">Toggle menu</span>
+                <span className="sr-only">Menüyü aç/kapat</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="right">
@@ -75,13 +75,13 @@ export function Navbar() {
                   href="/"
                   className="text-lg font-medium"
                 >
-                  Chat
+                  Sohbet
                 </Link>
                 <Link
                   href="/pricing"
                   className="text-lg font-medium"
                 >
-                  Pricing
+                  Fiyatlandırma
                 </Link>
 
                 <div className="mt-4 flex flex-col gap-2">
@@ -89,10 +89,10 @@ export function Navbar() {
                     variant="outline"
                     asChild
                   >
-                    <Link href="/signin">Login</Link>
+                    <Link href="/signin">Giriş yap</Link>
                   </Button>
                   <Button asChild>
-                    <Link href="/signup">Sign up</Link>
+                    <Link href="/signup">Kayıt ol</Link>
                   </Button>
                 </div>
               </nav>

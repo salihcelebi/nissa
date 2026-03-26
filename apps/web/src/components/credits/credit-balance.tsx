@@ -32,7 +32,7 @@ export function CreditBalance({
         )}
       >
         {showIcon && <Coins className="h-4 w-4" />}
-        <span className="text-sm font-medium">Loading...</span>
+        <span className="text-sm font-medium">Yükleniyor...</span>
       </Badge>
     );
   }
@@ -45,7 +45,7 @@ export function CreditBalance({
         className={cn("flex items-center space-x-2 px-3 py-1.5", className)}
       >
         {showIcon && <AlertCircle className="h-4 w-4" />}
-        <span className="text-sm font-medium">Error</span>
+        <span className="text-sm font-medium">Hata</span>
       </Badge>
     );
   }
@@ -65,7 +65,7 @@ export function CreditBalance({
 
   // Format credit display
   const formatCredits = (credits: number) => {
-    if (credits >= 1000000) return "Unlimited";
+    if (credits >= 1000000) return "Sınırsız";
     return credits.toLocaleString();
   };
 
@@ -80,7 +80,7 @@ export function CreditBalance({
     >
       {showIcon && getIcon(credits)}
       <span>
-        {formatCredits(credits)} {credits === 1 ? "credit" : "credits"}
+        {formatCredits(credits)} {credits === 1 ? "kredi" : "kredi"}
       </span>
     </Badge>
   );

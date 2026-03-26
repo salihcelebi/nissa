@@ -24,13 +24,13 @@ const messageTypeToLabel = (message: BaseMessage) => {
 
   switch (type) {
     case "human":
-      return "User";
+      return "Kullanıcı";
     case "ai":
-      return "Assistant";
+      return "Asistan";
     case "tool":
-      return "Tool";
+      return "Araç";
     case "System":
-      return "System";
+      return "Sistem";
     default:
       return "";
   }
@@ -238,7 +238,7 @@ export function StateView({
   const [expanded, setExpanded] = useState(false);
 
   if (!values) {
-    return <div>No state found</div>;
+    return <div>Durum bulunamadı</div>;
   }
 
   return (
@@ -252,7 +252,7 @@ export function StateView({
       {view === "description" && (
         <div className="pt-6 pb-2">
           <MarkdownText>
-            {description ?? "No description provided"}
+            {description ?? "Açıklama sağlanmadı"}
           </MarkdownText>
         </div>
       )}

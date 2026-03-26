@@ -3,19 +3,46 @@ import Stripe from "stripe";
 import { supabaseServer } from "@/lib/auth/supabase-server";
 import { getCreditLimitByPriceId } from "@/lib/stripe-config";
 
-// Initialize Stripe
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2026-01-28.clover",
-});
+function getStripe() {
+  const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 
-// This is your Stripe webhook secret for testing your endpoint locally
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
+  if (!stripeSecretKey) {
+    throw new Error("Missing STRIPE_SECRET_KEY environment variable");
+  }
+
+  return new Stripe(stripeSecretKey, {
+    apiVersion: "2026-01-28.clover",
+  });
+}
+
+function getStripeWebhookSecret() {
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!webhookSecret) {
+    throw new Error("Missing STRIPE_WEBHOOK_SECRET environment variable");
+  }
+
+  return webhookSecret;
+}
 
 export async function POST(request: Request) {
   const payload = await request.text();
   const sig = request.headers.get("stripe-signature") || "";
 
-  let event;
+  let stripe: Stripe;
+  let endpointSecret: string;
+  let event: Stripe.Event;
+
+  try {
+    stripe = getStripe();
+    endpointSecret = getStripeWebhookSecret();
+  } catch (err: any) {
+    console.error(`Stripe configuration error: ${err.message}`);
+    return NextResponse.json(
+      { error: `Stripe configuration error: ${err.message}` },
+      { status: 500 },
+    );
+  }
 
   try {
     event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
@@ -29,7 +56,6 @@ export async function POST(request: Request) {
 
   console.log(`Received webhook event: ${event.type}`);
 
-  // Handle the event
   switch (event.type) {
     case "customer.subscription.created":
     case "customer.subscription.updated": {
@@ -39,10 +65,8 @@ export async function POST(request: Request) {
       console.log("Subscription metadata:", subscription.metadata);
       console.log("Customer ID:", subscription.customer);
 
-      // Get the user ID from the metadata
       let userId = subscription.metadata.userId;
 
-      // If userId is not in subscription metadata, try to get it from the customer
       if (!userId) {
         console.log(
           "No userId in subscription metadata, fetching from customer...",
@@ -60,7 +84,6 @@ export async function POST(request: Request) {
         }
       }
 
-      // If still no userId, try to find by stripe_customer_id in database
       if (!userId) {
         console.log("No userId found, searching database by customer ID...");
         const { data: userData, error } = await supabaseServer
@@ -80,7 +103,6 @@ export async function POST(request: Request) {
       if (userId) {
         console.log("Updating user subscription for userId:", userId);
 
-        // Fetch email from Stripe customer
         let customerEmail = null;
         try {
           const customer = await stripe.customers.retrieve(
@@ -94,7 +116,6 @@ export async function POST(request: Request) {
           console.error("Error fetching customer email:", err);
         }
 
-        // If no email from Stripe, try to get from existing user record
         if (!customerEmail) {
           console.log("No email from Stripe, checking existing user record...");
           const { data: existingUser, error: userError } = await supabaseServer
@@ -109,7 +130,6 @@ export async function POST(request: Request) {
           }
         }
 
-        // Determine credits based on price ID and subscription status
         let creditsAvailable = 0;
 
         if (subscription.status === "active") {
@@ -141,7 +161,6 @@ export async function POST(request: Request) {
 
         console.log("Update data:", updateData);
 
-        // Update the user's subscription and credits in one operation
         const { error } = await supabaseServer
           .from("users")
           .upsert(updateData, {
@@ -169,7 +188,6 @@ export async function POST(request: Request) {
       const deletedUserId = deletedSubscription.metadata.userId;
 
       if (deletedUserId) {
-        // Update the user's subscription status and remove credits
         const { error } = await supabaseServer
           .from("users")
           .update({

@@ -17,7 +17,7 @@ function ResetButton({ handleReset }: { handleReset: () => void }) {
       className="flex items-center justify-center gap-2 text-gray-500 hover:text-red-500"
     >
       <Undo2 className="h-4 w-4" />
-      <span>Reset</span>
+      <span>Sıfırla</span>
     </Button>
   );
 }
@@ -110,7 +110,7 @@ function ResponseComponent({
     <div className="flex w-full flex-col items-start gap-4 rounded-xl border-[1px] border-gray-300 p-6">
       <div className="flex w-full items-center justify-between">
         <p className="text-base font-semibold text-black">
-          Respond to assistant
+          Asistana yanıt ver
         </p>
         <ResetButton
           handleReset={() => {
@@ -124,14 +124,14 @@ function ResponseComponent({
       )}
 
       <div className="flex w-full flex-col items-start gap-[6px]">
-        <p className="min-w-fit text-sm font-medium">Response</p>
+        <p className="min-w-fit text-sm font-medium">Yanıt</p>
         <Textarea
           disabled={streaming}
           value={res.args}
           onChange={(e) => onResponseChange(e.target.value, res)}
           onKeyDown={handleKeyDown}
           rows={4}
-          placeholder="Your response here..."
+          placeholder="Yanıtınızı buraya yazın..."
         />
       </div>
 
@@ -141,7 +141,7 @@ function ResponseComponent({
           disabled={streaming}
           onClick={handleSubmit}
         >
-          Send Response
+          Yanıtı gönder
         </Button>
       </div>
     </div>
@@ -171,7 +171,7 @@ function AcceptComponent({
         onClick={handleSubmit}
         className="w-full"
       >
-        Accept
+        Kabul et
       </Button>
     </div>
   );
@@ -217,10 +217,10 @@ function EditAndOrAcceptComponent({
     }
     return null;
   }
-  const header = editResponse.acceptAllowed ? "Edit/Accept" : "Edit";
-  let buttonText = "Submit";
+  const header = editResponse.acceptAllowed ? "Düzenle/Kabul et" : "Düzenle";
+  let buttonText = "Gönder";
   if (editResponse.acceptAllowed && !editResponse.editsMade) {
-    buttonText = "Accept";
+    buttonText = "Kabul et";
   }
 
   const handleReset = () => {
@@ -348,8 +348,8 @@ export function InboxItemInput({
       (Array.isArray(change) && !Array.isArray(key)) ||
       (!Array.isArray(change) && Array.isArray(key))
     ) {
-      toast.error("Error", {
-        description: "Something went wrong",
+      toast.error("Hata", {
+        description: "Bir şeyler ters gitti",
         richColors: true,
         closeButton: true,
       });
@@ -508,7 +508,7 @@ export function InboxItemInput({
         {supportsMultipleMethods ? (
           <div className="mx-auto mt-3 flex items-center gap-3">
             <Separator className="w-[full]" />
-            <p className="text-sm text-gray-500">Or</p>
+            <p className="text-sm text-gray-500">Veya</p>
             <Separator className="w-full" />
           </div>
         ) : null}
@@ -520,10 +520,10 @@ export function InboxItemInput({
           onResponseChange={onResponseChange}
           handleSubmit={handleSubmit}
         />
-        {streaming && <p className="text-sm text-gray-600">Running...</p>}
+        {streaming && <p className="text-sm text-gray-600">Çalışıyor...</p>}
         {streamFinished && (
           <p className="text-base font-medium text-green-600">
-            Successfully finished Graph invocation.
+            Grafik çağrısı başarıyla tamamlandı.
           </p>
         )}
       </div>

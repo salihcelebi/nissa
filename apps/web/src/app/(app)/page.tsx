@@ -9,7 +9,7 @@ import { Suspense, type ReactNode } from "react";
 import { Navbar } from "@/components/navbar";
 export default function DemoPage(): ReactNode {
   return (
-    <Suspense fallback={<div>Loading (layout)...</div>}>
+    <Suspense fallback={<div>Yükleniyor (yerleşim)...</div>}>
       <Toaster />
       <Navbar />
       <ThreadProvider>

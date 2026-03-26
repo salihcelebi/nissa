@@ -18,16 +18,17 @@ export default function Layout({
     <>
       {isDemoApp && (
         <div className="fixed top-0 right-0 left-0 z-10 bg-[#CFC8FE] py-2 text-center text-black shadow-md">
-          You're currently using the demo application. To use your own agents,
-          and run in production, check out the{" "}
+          Şu anda demo uygulamayı kullanıyorsunuz. Kendi ajanlarınızı kullanmak
+          ve canlı ortamda çalıştırmak için{" "}
           <a
             className="underline underline-offset-2"
             href={DOCS_LINK}
             target="_blank"
             rel="noopener noreferrer"
           >
-            documentation
+            dokümantasyona
           </a>
+          {" "}göz atın.
         </div>
       )}
       {children}

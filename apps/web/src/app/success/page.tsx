@@ -58,7 +58,7 @@ export default function SuccessPage() {
               case "price_1RRllZ5RmLx3D9SHTTT1pJxc":
                 return "Test Product";
               default:
-                return "Unknown Plan";
+                return "Bilinmeyen Plan";
             }
           };
 
@@ -69,11 +69,11 @@ export default function SuccessPage() {
             planName: getPlanName(data.priceId),
           });
         } else {
-          setError("Failed to fetch subscription details");
+          setError("Abonelik detayları alınamadı");
         }
       } catch (err) {
         console.error("Error checking subscription:", err);
-        setError("Error checking subscription status");
+        setError("Abonelik durumu kontrol edilirken hata oluştu");
       } finally {
         setLoading(false);
       }
@@ -93,15 +93,15 @@ export default function SuccessPage() {
             <CardHeader>
               <div className="flex items-center space-x-2">
                 <AlertCircle className="text-destructive h-6 w-6" />
-                <CardTitle>Invalid Session</CardTitle>
+                <CardTitle>Geçersiz Oturum</CardTitle>
               </div>
               <CardDescription>
-                No valid checkout session found. Please try subscribing again.
+                Geçerli bir ödeme oturumu bulunamadı. Lütfen tekrar abone olmayı deneyin.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <Button asChild>
-                <Link href="/pricing">Return to Pricing</Link>
+                <Link href="/pricing">Fiyatlandırmaya dön</Link>
               </Button>
             </CardContent>
           </Card>
@@ -127,17 +127,17 @@ export default function SuccessPage() {
             </div>
             <CardTitle className="text-2xl">
               {loading
-                ? "Processing your subscription..."
+                ? "Aboneliğiniz işleniyor..."
                 : error
-                  ? "Something went wrong"
-                  : "Subscription successful!"}
+                  ? "Bir şeyler ters gitti"
+                  : "Abonelik başarılı!"}
             </CardTitle>
             <CardDescription>
               {loading
-                ? "Please wait while we set up your account"
+                ? "Hesabınız hazırlanırken lütfen bekleyin"
                 : error
                   ? error
-                  : "Welcome to your new AI chatbot plan"}
+                  : "Yeni yapay zekâ sohbet botu planınıza hoş geldiniz"}
             </CardDescription>
           </CardHeader>
 
@@ -145,7 +145,7 @@ export default function SuccessPage() {
             <CardContent className="space-y-6">
               <div className="space-y-4 text-center">
                 <div>
-                  <h3 className="text-lg font-medium">Plan Details</h3>
+                  <h3 className="text-lg font-medium">Plan detayları</h3>
                   <div className="mt-2 flex items-center justify-center space-x-2">
                     <Badge
                       variant="default"
@@ -160,12 +160,12 @@ export default function SuccessPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-medium">Available Credits</h3>
+                  <h3 className="text-lg font-medium">Kullanılabilir kredi</h3>
                   <div className="text-primary mt-2 text-3xl font-bold">
                     {subscriptionDetails.credits >= 1000000
-                      ? "Unlimited"
+                      ? "Sınırsız"
                       : subscriptionDetails.credits.toLocaleString()}{" "}
-                    credits
+                    kredi
                   </div>
                 </div>
 
@@ -175,14 +175,14 @@ export default function SuccessPage() {
                     size="lg"
                     className="w-full"
                   >
-                    <Link href="/">Start Using Your AI Chatbot</Link>
+                    <Link href="/">Yapay zekâ sohbet botunu kullanmaya başla</Link>
                   </Button>
                   <Button
                     asChild
                     variant="outline"
                     className="w-full"
                   >
-                    <Link href="/pricing">View All Plans</Link>
+                    <Link href="/pricing">Tüm planları görüntüle</Link>
                   </Button>
                 </div>
               </div>
@@ -193,23 +193,23 @@ export default function SuccessPage() {
             <CardContent>
               <div className="space-y-4 text-center">
                 <p className="text-muted-foreground">
-                  Your payment was processed, but we're having trouble loading
-                  your subscription details. Please check your account or
-                  contact support.
+                  Ödemeniz alındı ancak abonelik detaylarınız yüklenirken sorun
+                  yaşanıyor. Lütfen hesabınızı kontrol edin veya destek ekibiyle
+                  iletişime geçin.
                 </p>
                 <div className="space-y-2">
                   <Button
                     asChild
                     className="w-full"
                   >
-                    <Link href="/">Go to Dashboard</Link>
+                    <Link href="/">Gösterge paneline git</Link>
                   </Button>
                   <Button
                     asChild
                     variant="outline"
                     className="w-full"
                   >
-                    <Link href="/pricing">Return to Pricing</Link>
+                    <Link href="/pricing">Fiyatlandırmaya dön</Link>
                   </Button>
                 </div>
               </div>
@@ -221,19 +221,19 @@ export default function SuccessPage() {
         {process.env.NODE_ENV === "development" && (
           <Card className="mt-8">
             <CardHeader>
-              <CardTitle className="text-sm">Debug Info</CardTitle>
+              <CardTitle className="text-sm">Hata Ayıklama Bilgisi</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-muted-foreground space-y-1 text-xs">
                 <p>
-                  <strong>Session ID:</strong> {sessionId}
+                  <strong>Oturum Kimliği:</strong> {sessionId}
                 </p>
                 <p>
-                  <strong>User ID:</strong> {user?.id || "Not logged in"}
+                  <strong>Kullanıcı Kimliği:</strong> {user?.id || "Giriş yapılmamış"}
                 </p>
                 {subscriptionDetails && (
                   <p>
-                    <strong>Price ID:</strong> {subscriptionDetails.priceId}
+                    <strong>Fiyat Kimliği:</strong> {subscriptionDetails.priceId}
                   </p>
                 )}
               </div>

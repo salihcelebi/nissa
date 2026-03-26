@@ -102,8 +102,8 @@ export default function useInterruptedActions({
   ) => {
     e.preventDefault();
     if (!humanResponse) {
-      toast.error("Error", {
-        description: "Please enter a response.",
+      toast.error("Hata", {
+        description: "Lütfen bir yanıt girin.",
         duration: 5000,
         richColors: true,
         closeButton: true,
@@ -151,8 +151,8 @@ export default function useInterruptedActions({
           (r) => r.type === selectedSubmitType,
         );
         if (!input) {
-          toast.error("Error", {
-            description: "No response found.",
+          toast.error("Hata", {
+            description: "Yanıt bulunamadı.",
             richColors: true,
             closeButton: true,
             duration: 5000,
@@ -169,8 +169,8 @@ export default function useInterruptedActions({
           return;
         }
 
-        toast("Success", {
-          description: "Response submitted successfully.",
+        toast("Başarılı", {
+          description: "Yanıt başarıyla gönderildi.",
           duration: 5000,
         });
 
@@ -181,16 +181,16 @@ export default function useInterruptedActions({
         console.error("Error sending human response", e);
 
         if ("message" in e && e.message.includes("Invalid assistant ID")) {
-          toast("Error: Invalid assistant ID", {
+          toast("Hata: Geçersiz asistan kimliği", {
             description:
-              "The provided assistant ID was not found in this graph. Please update the assistant ID in the settings and try again.",
+              "Verilen asistan kimliği bu grafikte bulunamadı. Lütfen ayarlardaki asistan kimliğini güncelleyip tekrar deneyin.",
             richColors: true,
             closeButton: true,
             duration: 5000,
           });
         } else {
-          toast.error("Error", {
-            description: "Failed to submit response.",
+          toast.error("Hata", {
+            description: "Yanıt gönderilemedi.",
             richColors: true,
             closeButton: true,
             duration: 5000,
@@ -210,8 +210,8 @@ export default function useInterruptedActions({
       setLoading(true);
       resumeRun(humanResponse);
 
-      toast("Success", {
-        description: "Response submitted successfully.",
+      toast("Başarılı", {
+        description: "Yanıt başarıyla gönderildi.",
         duration: 5000,
       });
     }
@@ -226,8 +226,8 @@ export default function useInterruptedActions({
 
     const ignoreResponse = humanResponse.find((r) => r.type === "ignore");
     if (!ignoreResponse) {
-      toast.error("Error", {
-        description: "The selected thread does not support ignoring.",
+      toast.error("Hata", {
+        description: "Seçilen sohbet yoksaymayı desteklemiyor.",
         duration: 5000,
       });
       return;
@@ -239,7 +239,7 @@ export default function useInterruptedActions({
     resumeRun([ignoreResponse]);
 
     setLoading(false);
-    toast("Successfully ignored thread", {
+    toast("Sohbet başarıyla yoksayıldı", {
       duration: 5000,
     });
   };
@@ -262,14 +262,14 @@ export default function useInterruptedActions({
         },
       );
 
-      toast("Success", {
-        description: "Marked thread as resolved.",
+      toast("Başarılı", {
+        description: "Sohbet çözüldü olarak işaretlendi.",
         duration: 3000,
       });
     } catch (e) {
       console.error("Error marking thread as resolved", e);
-      toast.error("Error", {
-        description: "Failed to mark thread as resolved.",
+      toast.error("Hata", {
+        description: "Sohbet çözüldü olarak işaretlenemedi.",
         richColors: true,
         closeButton: true,
         duration: 3000,

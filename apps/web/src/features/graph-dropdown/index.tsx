@@ -70,7 +70,7 @@ export function GraphDropdown() {
   if (loading)
     return (
       <div className="flex min-h-[56px] items-center justify-center">
-        Loading graphs...
+        Grafikler yükleniyor...
       </div>
     );
   if (!deployments.length)
@@ -81,7 +81,7 @@ export function GraphDropdown() {
           variant="outline"
           className="mt-2 ml-2 rounded-sm px-2 py-1 text-xs"
         >
-          {!jwt ? "Sign in to access graphs" : "No graphs"}
+          {!jwt ? "Grafiklere erişmek için giriş yapın" : "Grafik yok"}
         </Badge>
       </div>
     );
@@ -98,7 +98,7 @@ export function GraphDropdown() {
         onValueChange={setAssistantId}
       >
         <SelectTrigger className="w-[240px]">
-          <SelectValue placeholder="Select a graph...">
+          <SelectValue placeholder="Bir grafik seçin...">
             {selectedDeployment ? (
               <Badge
                 variant="outline"

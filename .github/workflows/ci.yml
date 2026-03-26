@@ -1,0 +1,164 @@
+# Run formatting on all PRs
+
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch: # Allows triggering the workflow manually in GitHub UI
+
+# If another push to the same PR or branch happens while this workflow is still running,
+# cancel the earlier run in favor of the next run.
+#
+# There's no point in testing an outdated version of the code. GitHub only allows
+# a limited number of job runners to be active at the same time, so it's better to cancel
+# pointless jobs early so that more useful jobs can run sooner.
+# Restrict default token permissions to least privilege.
+# Individual jobs should request only what they need.
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  format:
+    name: Check formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check formatting
+        run: pnpm format:check
+
+  lint:
+    name: Check linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Check linting
+        run: pnpm run lint
+
+  readme-spelling:
+    name: Check README spelling
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: codespell-project/actions-codespell@v2
+        with:
+          ignore_words_file: .codespellignore
+          path: README.md
+
+  check-spelling:
+    name: Check code spelling
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: codespell-project/actions-codespell@v2
+        with:
+          ignore_words_file: .codespellignore
+          path: src
+
+  dev-server-check:
+    name: Check dev server startup
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable Corepack
+        run: corepack enable
+        working-directory: .
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: .
+      - name: Build all packages
+        run: pnpm build
+        working-directory: .
+        env:
+          # Supabase
+          NEXT_PUBLIC_SUPABASE_URL: "https://dummy.supabase.co"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "dummy-anon-key"
+          SUPABASE_SERVICE_ROLE_KEY: "dummy-service-role-key"
+          # Stripe
+          STRIPE_SECRET_KEY: "sk_test_dummy_stripe_secret_key"
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: "pk_test_dummy_stripe_publishable_key"
+          STRIPE_WEBHOOK_SECRET: "whsec_dummy_webhook_secret"
+          # LangGraph
+          LANGGRAPH_API_URL: "https://dummy.langgraph.app"
+          LANGSMITH_API_KEY: "lsv2_dummy_langsmith_api_key"
+          NEXT_PUBLIC_API_URL: "https://dummy.api.url"
+          NEXT_PUBLIC_ASSISTANT_ID: "dummy-assistant"
+      - name: Test dev server startup
+        run: timeout 30s pnpm dev || if [ $? -eq 124 ]; then echo "✅ Dev server started successfully (timed out as expected)"; exit 0; else echo "❌ Dev server failed to start"; exit 1; fi
+        env:
+          NODE_ENV: development
+          # Supabase
+          NEXT_PUBLIC_SUPABASE_URL: "https://dummy.supabase.co"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "dummy-anon-key"
+          SUPABASE_SERVICE_ROLE_KEY: "dummy-service-role-key"
+          # Stripe
+          STRIPE_SECRET_KEY: "sk_test_dummy_stripe_secret_key"
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: "pk_test_dummy_stripe_publishable_key"
+          STRIPE_WEBHOOK_SECRET: "whsec_dummy_webhook_secret"
+          # LangGraph
+          LANGGRAPH_API_URL: "https://dummy.langgraph.app"
+          LANGSMITH_API_KEY: "lsv2_dummy_langsmith_api_key"
+          NEXT_PUBLIC_API_URL: "https://dummy.api.url"
+          NEXT_PUBLIC_ASSISTANT_ID: "dummy-assistant"
+
+  build-check:
+    name: Check project build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build all packages
+        run: pnpm build
+        env:
+          # Supabase
+          NEXT_PUBLIC_SUPABASE_URL: "https://dummy.supabase.co"
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: "dummy-anon-key"
+          SUPABASE_SERVICE_ROLE_KEY: "dummy-service-role-key"
+          # Stripe
+          STRIPE_SECRET_KEY: "sk_test_dummy_stripe_secret_key"
+          NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: "pk_test_dummy_stripe_publishable_key"
+          STRIPE_WEBHOOK_SECRET: "whsec_dummy_webhook_secret"
+          # LangGraph
+          LANGGRAPH_API_URL: "https://dummy.langgraph.app"
+          LANGSMITH_API_KEY: "lsv2_dummy_langsmith_api_key"
+          NEXT_PUBLIC_API_URL: "https://dummy.api.url"
+          NEXT_PUBLIC_ASSISTANT_ID: "dummy-assistant"

@@ -1,0 +1,65 @@
+{
+  "name": "fullstack-chat-repo",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.5.1",
+  "description": "Agent with Auth and Payments application with LangGraph agents and Next.js UI",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm -r --parallel dev",
+    "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r lint:fix",
+    "format": "pnpm -r format",
+    "format:check": "pnpm -r format:check",
+    "test": "pnpm -r test",
+    "test:int": "pnpm -r test:int",
+    "clean": "pnpm -r clean && rm -rf node_modules",
+    "setup:db": "echo '🗄️  Setting up Supabase database schema...' && echo '' && echo '⚡ Quick setup (requires .env files configured):' && echo 'npx supabase db execute --file supabase-schema.sql --project-ref YOUR_PROJECT_REF' && echo '' && echo '📋 Manual setup (recommended):' && echo '1. Open Supabase Dashboard > SQL Editor' && echo '2. Copy and paste contents of supabase-schema.sql' && echo '3. Click Run' && echo '' && echo '💡 Find your project ref in your Supabase URL: https://YOUR_PROJECT_REF.supabase.co'",
+    "web:dev": "pnpm --filter web dev",
+    "web:build": "pnpm --filter web build",
+    "agents:dev": "pnpm --filter agents dev",
+    "agents:build": "pnpm --filter agents build",
+    "agents:test": "pnpm --filter agents test",
+    "agents:test:int": "pnpm --filter agents test:int"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.3"
+  },
+  "engines": {
+    "node": ">=20.9.0",
+    "pnpm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/langchain-ai/fullstack-chat-repo.git"
+  },
+  "keywords": [
+    "langgraph",
+    "langchain",
+    "nextjs",
+    "typescript",
+    "chat",
+    "ai",
+    "agents",
+    "monorepo"
+  ],
+  "license": "MIT",
+  "pnpm": {
+    "overrides": {
+      "form-data@>=4.0.0 <4.0.4": "4.0.4",
+      "fast-xml-parser@>=4.0.0-beta.3 <=5.5.5": "5.5.6",
+      "playwright@<1.55.1": "1.55.1",
+      "qs@<6.14.2": "6.14.2",
+      "tar@<7.5.8": "7.5.8",
+      "flatted@<3.4.0": "3.4.0",
+      "minimatch@>=3.0.0 <3.1.4": "3.1.4",
+      "minimatch@>=5.0.0 <5.1.7": "5.1.7",
+      "minimatch@>=9.0.0 <9.0.7": "9.0.7"
+    }
+  }
+}
